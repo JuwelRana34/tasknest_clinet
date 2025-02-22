@@ -25,7 +25,7 @@ function Navbar() {
 
   useEffect(() => {
     const DynamicTitle = {
-      "/": "Home |tasknest",
+      "/": "Home | tasknest",
       "/login": "Login | tastnet",
     };
     document.title = DynamicTitle[pathname] || "tasknest";
