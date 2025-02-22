@@ -52,6 +52,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const Unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      setIsloading(false);
       if (user?.email) {
         const email = user.email;
         axios

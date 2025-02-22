@@ -7,7 +7,7 @@ import UserContext from '../Context/AuthContext'
 
 // eslint-disable-next-line react/prop-types
 function PrivetRoute({children}) {
-    const {user ,isLoading} = useContext(UserContext)
+    const {user , isLoading} = useContext(UserContext)
     const location = useLocation()
 
     if (isLoading) {

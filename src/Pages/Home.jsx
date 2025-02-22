@@ -26,7 +26,7 @@ const [newTask, setNewTask] = useState({
   category: "To-Do",
 });
 
-// Fetch tasks and distribute them into columns
+// Fetch tasks into columns
 const fetchTasks = async () => {
   try {
     const res = await axios.get(`${import.meta.env.VITE_API}/tasks`);
@@ -49,7 +49,7 @@ useEffect(() => {
 }, []);
 
 
-  // Professional Add Task Form
+  // Add Task 
   const handleAddTask = async (e) => {
     e.preventDefault();
     if (!newTask.title.trim()) {
@@ -64,6 +64,107 @@ useEffect(() => {
       console.error(err);
       toast.error("Failed to add task");
     }
+  };
+
+  const onDragEnd = async (result) => {
+    if (!result.destination) return;
+    const { source, destination } = result;
+
+    // Prevent moving directly from 'To-Do' to 'Done'
+    if (source.droppableId === "To-Do" && destination.droppableId === "Done") {
+      toast.error("Please move the task to 'In Progress' before marking it as done.");
+      return;
+    }
+
+    // Reordering within the same column
+    if (source.droppableId === destination.droppableId) {
+      const updatedTasks = Array.from(columns[source.droppableId]);
+      const [movedTask] = updatedTasks.splice(source.index, 1);
+      updatedTasks.splice(destination.index, 0, movedTask);
+
+      const tasksToUpdate = updatedTasks.map((task, index) => ({
+        ...task,
+        order: index,
+      }));
+
+      setColumns({
+        ...columns,
+        [source.droppableId]: tasksToUpdate,
+      });
+
+      try {
+        await Promise.all(
+          tasksToUpdate.map((task) =>
+            axios.put(`${import.meta.env.VITE_API}/tasks/${task._id}`, {
+              order: task.order,
+            })
+          )
+        );
+        toast.success("Order updated successfully");
+      } catch (err) {
+        console.error("Error updating order:", err);
+      }
+    } else {
+      // Moving a task between columns
+      const sourceTasks = Array.from(columns[source.droppableId]);
+      const destTasks = Array.from(columns[destination.droppableId]);
+      const [movedTask] = sourceTasks.splice(source.index, 1);
+      movedTask.category = destination.droppableId;
+      destTasks.splice(destination.index, 0, movedTask);
+
+      const updatedSourceTasks = sourceTasks.map((task, index) => ({
+        ...task,
+        order: index,
+      }));
+      const updatedDestTasks = destTasks.map((task, index) => ({
+        ...task,
+        order: index,
+      }));
+
+      setColumns({
+        ...columns,
+        [source.droppableId]: updatedSourceTasks,
+        [destination.droppableId]: updatedDestTasks,
+      });
+
+      try {
+        await axios.put(`${import.meta.env.VITE_API}/tasks/${movedTask._id}`, {
+          category: destination.droppableId,
+        });
+        toast.success("Task moved successfully");
+        await Promise.all([
+          ...updatedSourceTasks.map((task) =>
+            axios.put(`${import.meta.env.VITE_API}/tasks/${task._id}`, {
+              order: task.order,
+            })
+          ),
+          ...updatedDestTasks.map((task) =>
+            axios.put(`${import.meta.env.VITE_API}/tasks/${task._id}`, {
+              order: task.order,
+            })
+          ),
+        ]);
+      } catch (err) {
+        console.error("Error updating moved task:", err);
+      }
+    }
+  };
+
+
+  // Delete task
+  const handleDeleteTask = async (taskId) => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_API}/tasks/${taskId}`);
+      toast.success("Task deleted successfully");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to delete task");
+    }
+  };
+
+  // Edit task
+  const handleEditTask = (task) => {
+    setEditingTask(task);
   };
 
 
