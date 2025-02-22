@@ -46,7 +46,7 @@ function Navbar() {
 
   return (
     <div className=" backdrop-blur z-[999] bg-main_ui/40 sticky top-0 text-Main_text ">
-       <div className="navbar container mx-auto py-4 ">
+       <div className="navbar container mx-auto py-2 ">
       <div className="navbar-start ">
         <div className="dropdown">
           <div
@@ -79,7 +79,7 @@ function Navbar() {
         <Link to={"/"} className="flex items-center">
           <img
             src={"https://cdn-icons-png.flaticon.com/128/4245/4245736.png"}
-            className=" dark:rounded-lg w-12 md:w-16"
+            className=" dark:rounded-lg w-10 md:w-14"
             alt="TaskNest"
           />
 
