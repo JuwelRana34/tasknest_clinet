@@ -3,6 +3,7 @@ import UserContext from "../Context/AuthContext";
 import { Button, InputIcon, Input, Label, Divider, toast } from "keep-react";
 import { Link, useNavigate } from "react-router";
 import ThemeContext from "../Context/ThemeProvider";
+import axios from "axios";
 
 function Login() {
   const { user, GoogleLogin } = useContext(UserContext);
@@ -11,9 +12,28 @@ function Login() {
 
   const handleGoogleLogin = () => {
     GoogleLogin()
-      .then(() => {
-        toast.success("Logged in successfully");
-        navigate("/");
+      .then( ({user}) => {
+        
+        const userinfo={
+          name: user.displayName,
+          photo: user.photoURL,
+          email: user.email
+        }
+
+       fetch(`${import.meta.env.VITE_API}/user`, {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userinfo),
+      })
+        .then(() =>{
+          toast.success("Logged in successfully");
+            navigate("/")
+        }).catch((err) => {
+            toast.error("An error occurred while creating user.")
+            console.error(err)
+          })
       })
       .catch((err) => toast.error(`${err.message}`));
   };
@@ -21,9 +41,9 @@ function Login() {
   if (user) return navigate("/");
 
   return (
-    <div className="min-h-screen">
+    <div className="md:min-h-screen ">
       <div
-        className={`max-w-full h-screen container mx-auto  space-y-2 rounded-lg border bg-gradient-to-bl from-blue-400 to-blue-50  dark:border-none p-8 shadow-md  dark:bg-metal-800 dark:from-metal-800 dark:to-metal-900`}
+        className={`max-w-full min-h-screen container mx-auto  space-y-2 rounded-lg border bg-gradient-to-bl from-blue-400 to-blue-50  dark:border-none p-8 shadow-md  dark:bg-metal-800 dark:from-metal-800 dark:to-metal-900`}
       >
         <div className=" md:flex gap-2 ">
           <div>

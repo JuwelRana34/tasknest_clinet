@@ -318,10 +318,10 @@ useEffect(() => {
                         >
                           <h4 className="font-semibold">{task.title}</h4>
                           <p className="text-sm text-gray-600 dark:text-gray-300">{task.description}</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                          <p className="text-xs mt-2 text-gray-500 dark:text-gray-400">
                             {new Date(task.timestamp).toLocaleString()}
                           </p>
-                          <div className="flex justify-between mt-2">
+                          <div className="flex  mt-2">
                             <button
                               onClick={() => handleEditTask(task)}
                               className="mr-2 bg-blue-500 hover:bg-blue-600 text-white rounded px-3 py-1 text-sm dark:bg-metal-900"
