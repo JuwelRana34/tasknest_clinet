@@ -31,9 +31,9 @@ function Footer() {
 </footer>
 <footer className="footer container mx-auto text-base-content border-base-300 border-t px-10 py-4">
   <aside className="grid-flow-col items-center">
-    <img className="w-16 " src={"logo"} alt=""  />
+    <img className="w-16 " src={"https://cdn-icons-png.flaticon.com/128/4245/4245736.png"} alt=""  />
     <p >
-      <span className="  font-bold font-berkshire text-xl md:text-2xl "> HOME REPAIR</span> 
+      <span className=" logo text-blue-500/75 font-bold font-berkshire text-xl md:text-2xl "> TaskNest</span> 
       <br />
       Providing Services 2021
     </p>

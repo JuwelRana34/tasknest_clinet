@@ -78,14 +78,14 @@ function Navbar() {
         </div>
         <Link to={"/"} className="flex items-center">
           <img
-            src={"https://cdn-icons-png.flaticon.com/128/1527/1527478.png"}
+            src={"https://cdn-icons-png.flaticon.com/128/4245/4245736.png"}
             className=" dark:rounded-lg w-12 md:w-16"
             alt="TaskNest"
           />
 
           <Link
             to={"/"}
-            className="btn text-blue-500 text-xl btn-ghost p-2 dark:text-metal-300 md:text-3xl font-bold font-berkshire"
+            className="btn logo text-blue-500/75 text-xl btn-ghost p-2 dark:text-metal-800 md:text-3xl font-bold font-berkshire"
           >
             TaskNest
           </Link>
