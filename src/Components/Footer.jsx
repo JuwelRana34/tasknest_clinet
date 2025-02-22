@@ -8,7 +8,7 @@ function Footer() {
   const {theme}= useContext(ThemeContext)
   return (
     <div className="mt-10">
- <footer className="footer container mx-auto text-base-content p-10">
+ {/* <footer className="footer container mx-auto text-base-content p-10">
   <nav>
     <h6 className="footer-title">Services</h6>
     <a className="link link-hover">Repair Home</a>
@@ -28,14 +28,14 @@ function Footer() {
     <a className="link link-hover">Privacy policy</a>
     <a className="link link-hover">Cookie policy</a>
   </nav>
-</footer>
+</footer> */}
 <footer className="footer container mx-auto text-base-content border-base-300 border-t px-10 py-4">
   <aside className="grid-flow-col items-center">
     <img className="w-16 " src={"https://cdn-icons-png.flaticon.com/128/4245/4245736.png"} alt=""  />
     <p >
       <span className=" logo text-blue-500/75 font-bold font-berkshire text-xl md:text-2xl "> TaskNest</span> 
       <br />
-      Providing Services 2021
+      From 2021
     </p>
   </aside>
   <nav className="md:place-self-center md:justify-self-end">
@@ -55,7 +55,7 @@ function Footer() {
 
 <footer className="footer border-t container mx-auto footer-center  text-base-content p-4">
   <aside>
-    <p>Copyright © {new Date().getFullYear()} - All right reserved by Home repair Ltd.</p>
+    <p>Copyright © {new Date().getFullYear()} - All right reserved by TaskNest Ltd.</p>
   </aside>
 </footer>
     </div>
