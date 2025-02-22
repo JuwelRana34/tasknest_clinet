@@ -119,7 +119,62 @@ useEffect(() => {
             Add Task
           </button>
         </form>
-
+  
+        <DragDropContext onDragEnd={onDragEnd}>
+        <div className="flex flex-col md:flex-row gap-4 justify-center">
+          {Object.entries(columns).map(([columnId, tasks]) => (
+            <Droppable droppableId={columnId} key={columnId}>
+              {(provided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className="p-2 w-full mx-auto bg-blue-200 dark:bg-[#1f2937] min-h-[500px] rounded"
+                >
+                  <h3 className="text-lg font-bold mb-4 text-center">{columnId}</h3>
+                  {tasks.length === 0 && (
+                    <div className="text-center border-2 border-dashed border-blue-300 dark:border-[#374151] text-gray-500 dark:text-gray-400 py-4">
+                      Drop here
+                    </div>
+                  )}
+                  {tasks.map((task, index) => (
+                    <Draggable key={task._id} draggableId={task._id} index={index}>
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className="select-none p-4 mb-2 bg-white dark:bg-[#374151] rounded shadow"
+                        >
+                          <h4 className="font-semibold">{task.title}</h4>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">{task.description}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            {new Date(task.timestamp).toLocaleString()}
+                          </p>
+                          <div className="flex justify-between mt-2">
+                            <button
+                              onClick={() => handleEditTask(task)}
+                              className="mr-2 bg-blue-500 hover:bg-blue-600 text-white rounded px-3 py-1 text-sm dark:bg-metal-900"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteTask(task._id)}
+                              className="bg-red-500 hover:bg-red-600 text-white rounded px-3 py-1 text-sm dark:bg-rose-500"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ))}
+        </div>
+      </DragDropContext>
 
     </div>
   );
